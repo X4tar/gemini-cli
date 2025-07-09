@@ -34,7 +34,6 @@ import {
   ApiRequestEvent,
   ApiResponseEvent,
 } from '../telemetry/types.js';
-import { DEFAULT_GEMINI_FLASH_MODEL } from '../config/models.js';
 
 /**
  * Returns true if the response is valid, false otherwise.
@@ -198,7 +197,7 @@ export class GeminiChat {
     }
 
     const currentModel = this.config.getModel();
-    const fallbackModel = DEFAULT_GEMINI_FLASH_MODEL;
+    const fallbackModel = this.config.getFlashModel();
 
     // Don't fallback if already using Flash model
     if (currentModel === fallbackModel) {
@@ -257,7 +256,7 @@ export class GeminiChat {
     try {
       const apiCall = () =>
         this.contentGenerator.generateContent({
-          model: this.config.getModel() || DEFAULT_GEMINI_FLASH_MODEL,
+          model: this.config.getModel() || this.config.getFlashModel(),
           contents: requestContents,
           config: { ...this.generationConfig, ...params.config },
         });

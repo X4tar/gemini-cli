@@ -239,6 +239,10 @@ The CLI automatically loads environment variables from an `.env` file. The loadi
   - Specifies the default Gemini model to use.
   - Overrides the hardcoded default
   - Example: `export GEMINI_MODEL="gemini-2.5-flash"`
+- **`GEMINI_FLASH_MODEL`**:
+  - Specifies the default Gemini model to use.
+  - Overrides the hardcoded default
+  - Example: `export GEMINI_FLASH_MODEL="gemini-2.5-flash"`
 - **`GOOGLE_API_KEY`**:
   - Your Google Cloud API key.
   - Required for using Vertex AI in express mode.
@@ -285,6 +289,9 @@ Arguments passed directly when running the CLI can override other configurations
 - **`--model <model_name>`** (**`-m <model_name>`**):
   - Specifies the Gemini model to use for this session.
   - Example: `npm start -- --model gemini-1.5-pro-latest`
+- **`--flash-model <model_name>`**:
+  - Specifies the Gemini flash model to use for this session.
+  - Example: `npm start -- --flash-model gemini-2.5-flash`
 - **`--prompt <your_prompt>`** (**`-p <your_prompt>`**):
   - Used to pass a prompt directly to the command. This invokes Gemini CLI in a non-interactive mode.
 - **`--sandbox`** (**`-s`**):

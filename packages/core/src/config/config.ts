@@ -100,6 +100,7 @@ export type FlashFallbackHandler = (
 export interface ConfigParameters {
   sessionId: string;
   embeddingModel?: string;
+  flashModel?: string;
   sandbox?: SandboxConfig;
   targetDir: string;
   debugMode: boolean;
@@ -137,6 +138,7 @@ export class Config {
   private readonly sessionId: string;
   private contentGeneratorConfig!: ContentGeneratorConfig;
   private readonly embeddingModel: string;
+  private readonly flashModel: string;
   private readonly sandbox: SandboxConfig | undefined;
   private readonly targetDir: string;
   private readonly debugMode: boolean;
@@ -175,6 +177,7 @@ export class Config {
     this.sessionId = params.sessionId;
     this.embeddingModel =
       params.embeddingModel ?? DEFAULT_GEMINI_EMBEDDING_MODEL;
+    this.flashModel = params.flashModel ?? DEFAULT_GEMINI_FLASH_MODEL;
     this.sandbox = params.sandbox;
     this.targetDir = path.resolve(params.targetDir);
     this.debugMode = params.debugMode;
@@ -293,6 +296,10 @@ export class Config {
 
   getEmbeddingModel(): string {
     return this.embeddingModel;
+  }
+
+  getFlashModel(): string {
+    return this.flashModel;
   }
 
   getSandbox(): SandboxConfig | undefined {

@@ -119,6 +119,7 @@ describe('Gemini Client (client.ts)', () => {
           .mockReturnValue(contentGeneratorConfig),
         getToolRegistry: vi.fn().mockResolvedValue(mockToolRegistry),
         getModel: vi.fn().mockReturnValue('test-model'),
+        getFlashModel: vi.fn().mockReturnValue(DEFAULT_GEMINI_FLASH_MODEL),
         getEmbeddingModel: vi.fn().mockReturnValue('test-embedding-model'),
         getApiKey: vi.fn().mockReturnValue('test-key'),
         getVertexAI: vi.fn().mockReturnValue(false),

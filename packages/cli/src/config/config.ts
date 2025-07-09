@@ -18,6 +18,7 @@ import {
   DEFAULT_GEMINI_EMBEDDING_MODEL,
   FileDiscoveryService,
   TelemetryTarget,
+  DEFAULT_GEMINI_FLASH_MODEL,
 } from '@google/gemini-cli-core';
 import { Settings } from './settings.js';
 
@@ -41,6 +42,7 @@ const logger = {
 
 interface CliArgs {
   model: string | undefined;
+  flashModel: string | undefined;
   sandbox: boolean | string | undefined;
   'sandbox-image': string | undefined;
   debug: boolean | undefined;
@@ -62,6 +64,12 @@ async function parseArguments(): Promise<CliArgs> {
       type: 'string',
       description: `Model`,
       default: process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL,
+    })
+    .option('flash-model', {
+      alias: 'fm',
+      type: 'string',
+      description: `Flash Model`,
+      default: process.env.GEMINI_FLASH_MODEL || DEFAULT_GEMINI_FLASH_MODEL,
     })
     .option('prompt', {
       alias: 'p',
@@ -245,6 +253,7 @@ export async function loadCliConfig(
     fileDiscoveryService: fileService,
     bugCommand: settings.bugCommand,
     model: argv.model!,
+    flashModel: argv.flashModel,
     extensionContextFilePaths,
   });
 }

@@ -38,7 +38,6 @@ import {
   createContentGenerator,
 } from './contentGenerator.js';
 import { ProxyAgent, setGlobalDispatcher } from 'undici';
-import { DEFAULT_GEMINI_FLASH_MODEL } from '../config/models.js';
 
 function isThinkingSupported(model: string) {
   if (model.startsWith('gemini-2.5')) return true;
@@ -77,6 +76,10 @@ export class GeminiClient {
       throw new Error('Content generator not initialized');
     }
     return this.contentGenerator;
+  }
+
+  getConfig(): Config {
+    return this.config;
   }
 
   async addHistory(content: Content) {
@@ -256,7 +259,7 @@ export class GeminiClient {
     contents: Content[],
     schema: SchemaUnion,
     abortSignal: AbortSignal,
-    model: string = DEFAULT_GEMINI_FLASH_MODEL,
+    model: string = this.config.getFlashModel(),
     config: GenerateContentConfig = {},
   ): Promise<Record<string, unknown>> {
     try {
@@ -507,7 +510,7 @@ export class GeminiClient {
     }
 
     const currentModel = this.config.getModel();
-    const fallbackModel = DEFAULT_GEMINI_FLASH_MODEL;
+    const fallbackModel = this.config.getFlashModel();
 
     // Don't fallback if already using Flash model
     if (currentModel === fallbackModel) {

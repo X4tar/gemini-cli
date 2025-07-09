@@ -18,12 +18,13 @@ let mockSendMessageStream: any;
 vi.mock('../core/client.js', () => ({
   GeminiClient: vi.fn().mockImplementation(function (
     this: any,
-    _config: Config,
+    config: Config,
   ) {
     this.generateJson = (...params: any[]) => mockGenerateJson(...params); // Corrected: use mockGenerateJson
     this.startChat = (...params: any[]) => mockStartChat(...params); // Corrected: use mockStartChat
     this.sendMessageStream = (...params: any[]) =>
       mockSendMessageStream(...params); // Corrected: use mockSendMessageStream
+    this.getConfig = () => config;
     return this;
   }),
 }));
@@ -155,6 +156,7 @@ describe('editCorrector', () => {
       const configParams = {
         apiKey: 'test-api-key',
         model: 'test-model',
+        flashModel: 'test-flash-model',
         sandbox: false as boolean | string,
         targetDir: '/test',
         debugMode: false,
@@ -174,6 +176,7 @@ describe('editCorrector', () => {
         ...configParams,
         getApiKey: vi.fn(() => configParams.apiKey),
         getModel: vi.fn(() => configParams.model),
+        getFlashModel: vi.fn(() => configParams.flashModel),
         getSandbox: vi.fn(() => configParams.sandbox),
         getTargetDir: vi.fn(() => configParams.targetDir),
         getToolRegistry: vi.fn(() => mockToolRegistry),
@@ -525,6 +528,7 @@ describe('editCorrector', () => {
       const configParams = {
         apiKey: 'test-api-key',
         model: 'test-model',
+        flashModel: 'test-flash-model',
         sandbox: false as boolean | string,
         targetDir: '/test',
         debugMode: false,
@@ -544,6 +548,7 @@ describe('editCorrector', () => {
         ...configParams,
         getApiKey: vi.fn(() => configParams.apiKey),
         getModel: vi.fn(() => configParams.model),
+        getFlashModel: vi.fn(() => configParams.flashModel),
         getSandbox: vi.fn(() => configParams.sandbox),
         getTargetDir: vi.fn(() => configParams.targetDir),
         getToolRegistry: vi.fn(() => mockToolRegistry),
